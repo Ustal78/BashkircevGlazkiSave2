@@ -47,9 +47,7 @@ namespace BashkircevGlazkiSave
             get
             {
                 return ProductSale
-                    .Sum(ps => (decimal?)(
-                        ps.ProductCount * ps.Product.MinCostForAgent
-                    )) ?? 0;
+                    .Sum(ps => (decimal?)(ps.ProductCount * ps.Product.MinCostForAgent)) ?? 0;
             }
         }
 
@@ -72,6 +70,17 @@ namespace BashkircevGlazkiSave
                     return 20;
 
                 return 25;
+            }
+        }
+
+        public string AgentPhotoPathFull
+        {
+            get
+            {
+                if (string.IsNullOrWhiteSpace(Logo))
+                    return null;
+
+                return "." + Logo;
             }
         }
 

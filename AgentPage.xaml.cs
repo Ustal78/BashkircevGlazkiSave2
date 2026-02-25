@@ -20,6 +20,9 @@ namespace BashkircevGlazkiSave
     /// </summary>
     public partial class AgentPage : Page
     {
+        int currentPage = 1;
+        int itemsPerPage = 10;
+        int totalPages = 1;
         public AgentPage()
         {
             InitializeComponent();
@@ -111,7 +114,61 @@ namespace BashkircevGlazkiSave
                     agents = agents.OrderByDescending(a => a.Priority).ToList();
                     break;
             }
-            AgentListView.ItemsSource = agents;
+            totalPages = (int)Math.Ceiling((double)agents.Count / itemsPerPage);
+
+            var pageList = agents
+                .Skip((currentPage - 1) * itemsPerPage)
+                .Take(itemsPerPage)
+                .ToList();
+
+            AgentListView.ItemsSource = pageList;
+
+            DrawPageButtons();
+        }
+
+        private void DrawPageButtons()
+        {
+            PageNumbers.Children.Clear();
+
+            for (int i = 1; i <= totalPages; i++)
+            {
+                Button btn = new Button();
+                btn.Content = i;
+                btn.Tag = i;
+                btn.Width = 30;        
+                btn.Height = 25;        
+                btn.Margin = new Thickness(2);
+                btn.Padding = new Thickness(0);
+                btn.Click += PageButton_Click;
+
+                PageNumbers.Children.Add(btn);
+            }
+        }
+
+        private void PageButton_Click(object sender, RoutedEventArgs e)
+        {
+            Button btn = sender as Button;
+            currentPage = (int)btn.Tag;
+            UpdateAgents();
+        }
+
+
+        private void PrevPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPage > 1)
+            {
+                currentPage--;
+                UpdateAgents();
+            }
+        }
+
+        private void NextPage_Click(object sender, RoutedEventArgs e)
+        {
+            if (currentPage < totalPages)
+            {
+                currentPage++;
+                UpdateAgents();
+            }
         }
     }
 }
