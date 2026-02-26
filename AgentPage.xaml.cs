@@ -43,7 +43,7 @@ namespace BashkircevGlazkiSave
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            Manager.MainFrame.Navigate(new AddEditPage());
+            Manager.MainFrame.Navigate(new AddEditPage(null));
         }
 
         private void SearchBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -169,6 +169,16 @@ namespace BashkircevGlazkiSave
                 currentPage++;
                 UpdateAgents();
             }
+        }
+
+        private void AddAgentBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new AddEditPage(null));
+        }
+
+        private void EditBtn_Click(object sender, RoutedEventArgs e)
+        {
+            Manager.MainFrame.Navigate(new AddEditPage((sender as Button).DataContext as Agent));
         }
     }
 }

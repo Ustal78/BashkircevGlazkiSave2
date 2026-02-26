@@ -54,6 +54,8 @@
 
                         </StackPanel>
 
+                        <Button Content="Редактировать" Width="160" Height="30" Grid.Column="1" Grid.Row="3" HorizontalAlignment="Right" Name="EditBtn" Click="EditBtn_Click"></Button>
+
                         <StackPanel  Orientation="Horizontal" Grid.Column="1" Grid.Row="1" Margin="10,0,0,0"  >
 
                             <TextBlock Text="{Binding TotalSales}" FontSize="20"></TextBlock>
@@ -73,10 +75,23 @@
                             <TextBlock Text="{Binding DiscountPercent}" FontSize="20"></TextBlock>
                             <TextBlock Text="%" FontSize="20"></TextBlock>
                         </StackPanel>
-                        
+                         
                     </Grid>
+                    
                 </DataTemplate>
+                
             </ListView.ItemTemplate>
+            
+            <ListView.ItemContainerStyle>
+                <Style TargetType="ListViewItem">
+                    <Style.Triggers>
+                        <DataTrigger Binding="{Binding DiscountPercent}" Value="25">
+                            <Setter Property="Background" Value="LightGreen"/>
+                        </DataTrigger>
+                    </Style.Triggers>
+                </Style>
+            </ListView.ItemContainerStyle>
+
         </ListView>
 
         <Grid Grid.Row="2">
@@ -108,6 +123,7 @@
             </ComboBox>
             
             <ComboBox Name="FilterCombo" Width="180" Height="20" Margin="5" SelectionChanged="FilterCombo_SelectionChanged"></ComboBox>
+            <Button Content="Добавить агента" FontSize="13" VerticalAlignment="Center" Width="145" Name="AddAgentBtn" Click="AddAgentBtn_Click"/>
         </StackPanel>
         
     </Grid>
